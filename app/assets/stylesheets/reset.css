@@ -122,5 +122,14 @@ select {
 legend {
   color:#000;
 }
+
+#error_explanation {
+  max-width: 600px;        /* 最大幅 */
+  width: 80%;
+  margin: 10px auto;        /* 上下余白1em、左右中央寄せ */
+  padding: 10px;        /* 上下1em、左右1emのパディング */
+}
+
 /* YUI CSS Detection Stamp */
 #yui3-css-stamp.cssreset { display: none; }
+
