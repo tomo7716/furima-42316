@@ -9,11 +9,12 @@ class User < ApplicationRecord
 
   validates :password, presence: true
   validates :password, length: { minimum: 6, maximum: 128 }, allow_blank: true
-  validates :password, format: { with: /\A(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]+\z/, message: 'is invalid. Include both letters and numbers' }
+  validates :password,
+            format: { with: /\A(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]+\z/, message: 'is invalid. Include both letters and numbers' }
   validates :password, confirmation: true
 
   validates :email, presence: true, uniqueness: true,
-                  format: { with: URI::MailTo::EMAIL_REGEXP, message: 'is invalid' }
+                    format: { with: URI::MailTo::EMAIL_REGEXP, message: 'is invalid' }
 
   validates :last_name, presence: true
   validates :last_name, format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/, message: 'is invalid. Input full-width characters' }
