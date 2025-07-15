@@ -68,13 +68,13 @@ RSpec.describe Item, type: :model do
       end
 
       it 'nameが41文字以上では保存できない' do
-        @item.name =  'あ' * 41
+        @item.name = 'あ' * 41
         @item.valid?
         expect(@item.errors.full_messages).to include('Name is too long (maximum is 40 characters)')
       end
 
       it 'descriptionが1001文字以上では保存できない' do
-        @item.description =  'あ' * 1001
+        @item.description = 'あ' * 1001
         @item.valid?
         expect(@item.errors.full_messages).to include('Description is too long (maximum is 1000 characters)')
       end
@@ -82,7 +82,7 @@ RSpec.describe Item, type: :model do
       it 'userが紐づいていないと保存できない' do
         @item.user = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include("User must exist")
+        expect(@item.errors.full_messages).to include('User must exist')
       end
 
       it 'priceが数値以外では保存できない' do
@@ -104,7 +104,7 @@ RSpec.describe Item, type: :model do
       end
 
       it 'priceが10000000以上では保存できない' do
-        @item.price = 10000000
+        @item.price = 10_000_000
         @item.valid?
         expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
       end
