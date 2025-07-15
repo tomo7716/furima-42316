@@ -84,6 +84,30 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("User must exist")
       end
+
+      it 'priceが数値以外では保存できない' do
+        @item.price = 'abc'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price is not a number')
+      end
+
+      it 'priceが全角数字では保存できない' do
+        @item.price = '１２３４'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price is not a number')
+      end
+
+      it 'priceが300未満では保存できない' do
+        @item.price = 299
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price must be greater than or equal to 300')
+      end
+
+      it 'priceが10000000以上では保存できない' do
+        @item.price = 10000000
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
+      end
     end
   end
 end
