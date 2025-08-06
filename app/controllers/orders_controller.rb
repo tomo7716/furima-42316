@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item
+  before_action :redirect_if_sold
 
   def new
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
@@ -43,5 +44,9 @@ class OrdersController < ApplicationController
       card: order_params[:token],
       currency: 'jpy'
     )
+  end
+
+  def redirect_if_sold
+    redirect_to root_path if @item.order.present?
   end
 end
