@@ -3,21 +3,21 @@ class OrdersController < ApplicationController
   before_action :set_item
 
   def new
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @order_address = OrderAddress.new
   end
 
   def create
-  @order_address = OrderAddress.new(order_params)
-  if @order_address.valid?
-    pay_item
-    @order_address.save
-    redirect_to root_path
-  else
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
-    render :new
+    @order_address = OrderAddress.new(order_params)
+    if @order_address.valid?
+      pay_item
+      @order_address.save
+      redirect_to root_path
+    else
+      gon.public_key = ENV['PAYJP_PUBLIC_KEY']
+      render :new
+    end
   end
-end
 
   private
 
@@ -37,7 +37,7 @@ end
   end
 
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Charge.create(
       amount: @item.price,
       card: order_params[:token],
