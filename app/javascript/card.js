@@ -1,5 +1,6 @@
 const pay = () => {
-  const payjp = Payjp('pk_test_***********************'); // PAY.JPテスト公開鍵
+  const publicKey = gon.public_key
+  const payjp = Payjp(publicKey)
   const elements = payjp.elements();
 
   const numberElement = elements.create('cardNumber');
@@ -21,9 +22,9 @@ const pay = () => {
         alert('カード情報が正しくありません');
       } else {
         const token = response.id;
-
         // トークンをフォームに埋め込む
         const tokenInput = document.createElement('input');
+
         tokenInput.setAttribute('type', 'hidden');
         tokenInput.setAttribute('name', 'order_address[token]');
         tokenInput.setAttribute('value', token);
@@ -41,3 +42,4 @@ const pay = () => {
 };
 
 window.addEventListener('turbo:load', pay);
+window.addEventListener("turbo:render", pay);
