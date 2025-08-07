@@ -23,14 +23,13 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order_address).permit(
-      :postal_code, :prefecture_id, :city, :house_number,
-      :building_name, :phone_number, :token
-    ).merge(
-      user_id: current_user.id,
-      item_id: params[:item_id],
-      token: params[:order_address][:token]
-    )
+  params.require(:order_address).permit(
+    :postal_code, :prefecture_id, :city, :house_number,
+    :building_name, :phone_number, :token
+  ).merge(
+    user_id: current_user.id,
+    item_id: params[:item_id]
+  )
   end
 
   def set_item
@@ -47,6 +46,6 @@ class OrdersController < ApplicationController
   end
 
   def redirect_if_sold
-    redirect_to root_path if @item.order.present?
+    redirect_to root_path if @item.order.present? || current_user.id == @item.user_id
   end
 end
