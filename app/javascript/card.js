@@ -19,23 +19,21 @@ const pay = () => {
 
     payjp.createToken(numberElement).then(function (response) {
       if (response.error) {
-        alert('カード情報が正しくありません');
+        
+        form.submit();
       } else {
         const token = response.id;
-        // トークンをフォームに埋め込む
         const tokenInput = document.createElement('input');
-
         tokenInput.setAttribute('type', 'hidden');
         tokenInput.setAttribute('name', 'order_address[token]');
         tokenInput.setAttribute('value', token);
         form.appendChild(tokenInput);
 
-        // カード情報のDOMを削除（セキュリティのため）
         numberElement.unmount();
         expiryElement.unmount();
         cvcElement.unmount();
 
-        form.submit(); // トークンを含めて送信
+        form.submit();
       }
     });
   });
